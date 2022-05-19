@@ -1,22 +1,24 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast, ToastContainer } from 'react-toastify';
 
+import 'react-toastify/dist/ReactToastify.css';
 
 const TodoForm = () => {
     const { register, formState: { errors }, handleSubmit ,reset } = useForm();
 
     const onSubmit = data => {
-        const url =`http://localhost:8000/todolist`;
+        const url =`https://blooming-sea-36945.herokuapp.com/todolist`;
         fetch(url,{
             method: 'POST',
-            headers:{
-                'content-type':'application/json'
+            headers: {
+                'content-type': 'application/json',
             },
             body: JSON.stringify(data)
         })
         .then(res=> res.json())
         .then(res =>{
-            // toast('Your items is add our site !!');
+            toast.success('Congress!!! your Task added');
             console.log(res);
            reset();
             
@@ -25,7 +27,8 @@ const TodoForm = () => {
 
     return (
 
-        <div className=' h-screen justify-center items-center'>
+       <div>
+            <div className=' flex h-screen justify-center items-center'>
          <div className="card w-96 bg-base-100 shadow-xl">
             <div className="card-body">
 
@@ -60,7 +63,21 @@ const TodoForm = () => {
         </div>
      
     </div>
-
+    <ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+/>
+{/* Same as */}
+<ToastContainer />
+       </div>
+    
     );
 };
 
